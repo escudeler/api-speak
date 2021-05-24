@@ -1,0 +1,26 @@
+server:
+  port: ${SERVER_PORT:8011}
+  servlet:
+    context-path: /api-speak/v1
+    
+grpc:
+  server:
+    port: 8211
+    enableKeepAlive: true
+    permitKeepAliveWithoutCalls: true
+    keepAliveTime: ${GRPC_SERVER_KEEP_ALIVE_TIME:60}
+    keepAliveTimeout: ${GRPC_SERVER_KEEP_ALIVE_TIMEOUT:20}  
+  client:
+    grpc-server:
+      address: localhost:8212
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      permitKeepAliveWithoutCalls: true
+      keepAliveTime: ${GRPC_KEEP_ALIVE_TIME:60}
+      keepAliveTimeout: ${GRPC_KEEP_ALIVE_TIMEOUT:20}
+      negotiationType: PLAINTEXT
+
+logging:
+  file: api-speak.log
+  level:
+    root: ${LOGGING_LEVEL:info}
