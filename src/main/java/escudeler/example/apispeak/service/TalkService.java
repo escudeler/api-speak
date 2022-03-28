@@ -9,8 +9,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 
+import escudeler.example.apispeak.config.ApplicationConfig;
 import escudeler.example.apispeak.grpc.HelloResponse;
-import escudeler.example.apispeak.grpc.SpeakRequest;
+import escudeler.example.apispeak.grpc.PersonRequest;
 import escudeler.example.apispeak.request.HelloRequest;
 import escudeler.example.apispeak.response.AuthResponse;
 import escudeler.example.apispeak.response.SpeakHelloResponse;
@@ -29,10 +30,11 @@ public class TalkService {
 	private ThirdPartGrpcServiceBlockingStub thirdPartBlockingStub;
 
 	private final RestTemplate restTemplate;
+	private final ApplicationConfig applicationConfig;
 	
-	public HelloResponse hello(SpeakRequest request) {
+	public HelloResponse hello(PersonRequest request) {
 		try {
-			log.info("Call gRPC to validate people {}...", request.getPeopleName());
+			log.info("Call gRPC to validate person " + request.getPersonName() + "...");
 			AuthorizeResponse authorizeResponse = thirdPartBlockingStub.authorize(request);
 
 			String reply = authorizeResponse.getAuthorized() ? "Hello, How are u?" : "Get out of here!";
@@ -46,10 +48,9 @@ public class TalkService {
 
 	public SpeakHelloResponse helloHttp(HelloRequest request) {
 		try {
-            log.info("Call http to validate people {}...", request.getPeopleName());
-            
-            URI uri = new UriTemplate("http://localhost:8012/api-third-part/v1/authorize").expand();
-            
+            log.info("Call http to validate person " + request.getPersonName() + "...");
+            URI uri = new UriTemplate(applicationConfig.getHttpThirdPartAddress()).expand();
+
             RequestEntity<HelloRequest> requestEntity = RequestEntity.post(uri)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(request);

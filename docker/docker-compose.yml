@@ -1,0 +1,22 @@
+version: '3.6'
+
+services:
+  api-speak:
+    container_name: api-speak
+    image: escudeler/api-speak
+    ports:
+      - "8011:8011"
+    environment:
+      SERVER_PORT: 8011
+      HTTP_THIRD_PART_ADDRESS: "http://api-third-part:8012/api-third-part/v1/authorize"
+      GRPC_SERVER_PORT: 8211
+      GRPC_SERVER_KEEP_ALIVE_TIME: 60
+      GRPC_SERVER_KEEP_ALIVE_TIMEOUT: 20
+      GRPC_THIRD_PART_ADDRESS: "api-third-part:8212"
+      GRPC_CLIENT_KEEP_ALIVE_TIME: 60
+      GRPC_CLIENT_KEEP_ALIVE_TIMEOUT: 20
+      LOGGING_LEVEL: "info"
+networks:
+  grpc-example:
+    external:
+      name: api-speak

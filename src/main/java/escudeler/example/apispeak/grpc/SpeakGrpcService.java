@@ -17,16 +17,16 @@ public class SpeakGrpcService extends SpeakGrpcServiceImplBase {
 	private final TalkService talkService;
 	
 	@Override
-	public void hello(SpeakRequest request, StreamObserver<HelloResponse> responseObserver) {
+	public void hello(PersonRequest request, StreamObserver<HelloResponse> responseObserver) {
 		try {
 			HelloResponse response = talkService.hello(request);
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         } catch (StatusRuntimeException e) {
-            log.warn("StatusError on SubscriberCredentialGrpc.", e);
+            log.warn("StatusError on TalkGrpc.", e);
             responseObserver.onError(e);
         } catch (Exception e) {
-            log.warn("Error on SubscriberCredentialGrpc.", e);
+            log.warn("Error on TalkGrpc.", e);
             responseObserver.onError(e);
         }
 	}

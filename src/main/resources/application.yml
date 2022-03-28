@@ -5,22 +5,26 @@ server:
     
 grpc:
   server:
-    port: 8211
+    port: ${GRPC_SERVER_PORT:8211}
     enableKeepAlive: true
     permitKeepAliveWithoutCalls: true
     keepAliveTime: ${GRPC_SERVER_KEEP_ALIVE_TIME:60}
-    keepAliveTimeout: ${GRPC_SERVER_KEEP_ALIVE_TIMEOUT:20}  
+    keepAliveTimeout: ${GRPC_SERVER_KEEP_ALIVE_TIMEOUT:20}
   client:
     grpc-server:
-      address: localhost:8212
+      address: ${GRPC_THIRD_PART_ADDRESS:localhost:8212}
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       permitKeepAliveWithoutCalls: true
-      keepAliveTime: ${GRPC_KEEP_ALIVE_TIME:60}
-      keepAliveTimeout: ${GRPC_KEEP_ALIVE_TIMEOUT:20}
+      keepAliveTime: ${GRPC_CLIENT_KEEP_ALIVE_TIME:60}
+      keepAliveTimeout: ${GRPC_CLIENT_KEEP_ALIVE_TIMEOUT:20}
       negotiationType: PLAINTEXT
 
+http:
+  thirdPartAddress: ${HTTP_THIRD_PART_ADDRESS:http://localhost:8012/api-third-part/v1/authorize}
+
 logging:
-  file: api-speak.log
+  file:
+    name: api-speak.log
   level:
     root: ${LOGGING_LEVEL:info}
