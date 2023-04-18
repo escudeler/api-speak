@@ -31,18 +31,20 @@ docker build -t escudeler/api-speak .
 ```sh
 # up container
 docker-compose up -d
+```
 
-# for logs
+**For logs**
+```sh
 docker logs -f api-speak
 ```
 
 **Postman Collection**
 - The Posts examples can be obtained [Here](https://www.getpostman.com/collections/ad0f4be8e0eb643d4cde).
 
-**Specification of gRPC**
+## Specification of gRPC
 
-API Speak's service use gRPC connection for fastest integration with Listen and Third Part.
-- Method: **hello** -> generate response to Listen.
-- Method: **** -> validate permission with Third Part.
+API Speak's service use gRPC connection for fastest integration with **Listen** and **Third Part** APIs.
+- Method: **hello** -> generate response to (server of) Listen.
+- Method: **authorize** -> validate permission with (client of) Third Part.
 
-More info about gRPC Communication is in [Speak Service Proto](https://github.com/escudeler/api-common-proto/blob/master/src/main/proto/SpeakService.proto/) and [Third Part Service Proto](https://github.com/escudeler/api-common-proto/blob/master/src/main/proto/ThirdPartService.proto/).
+_More info about gRPC Communication is in [Speak Service Proto](https://github.com/escudeler/api-common-proto/blob/master/src/main/proto/SpeakService.proto/) and [Third Part Service Proto](https://github.com/escudeler/api-common-proto/blob/master/src/main/proto/ThirdPartService.proto/)._
